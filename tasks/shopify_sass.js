@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             base: ''
         });
 
-        var rex = /@import\s*("[^"]+"|'[^']+')\s*;/g;
+        var rex = /@import\s*(("([^"]+)")|('([^']+)'))\s*;/g;
         var match;
 
         // Iterate over each specified src file
@@ -37,7 +37,9 @@ module.exports = function(grunt) {
 
                 while (match = rex.exec(fileContents)) {
                     // Extract just the source of the file
-                    sources.push(path.join(options.base, (match[1])) );
+                    // [3] double quotes, @import "_import-file.scss";
+                    // [5] single quotes, @import '_import-file.scss';
+                    sources.push(path.join(options.base, (match[3] || match[5])) );
                 }
             });
 
