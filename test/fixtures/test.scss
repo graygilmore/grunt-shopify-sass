@@ -1,6 +1,8 @@
-@import "_another.scss";
-@import 'nested/_another.scss';
+/* Files with both double quotes and single quotes and a nested path */
 
-/* This is just a comment. */
+@import "_blue.scss";
+@import 'nested/_black.scss';
 
-@import 'file/no_exist.scss';
+/* This file does not exist */
+
+@import '_grey.scss';
