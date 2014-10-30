@@ -54,7 +54,7 @@ A string value that is used to determine where to find the imported files. If no
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, we aren't passing any options to the plugin. All of the imports in `styles/theme.scss` will be concatenated into `assets/theme.scss.liquid`.
 
 ```scss
 /* Example "styles.theme.scss" */
@@ -79,7 +79,7 @@ grunt.initConfig({
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, the `base` option is used to specify where the imported files should be coming from. We're also providing two different source files.
 
 ```js
 grunt.initConfig({
