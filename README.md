@@ -1,4 +1,4 @@
-# grunt-shopify-sass
+# grunt-shopify-sass [![Build Status](https://travis-ci.org/graygilmore/grunt-shopify-sass.svg?branch=master)](https://travis-ci.org/graygilmore/grunt-shopify-sass)
 
 > Concatenate your Sass files defined by the @import order.
 
