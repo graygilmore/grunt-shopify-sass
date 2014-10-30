@@ -1,0 +1,6 @@
+@import "_another.scss";
+@import 'nested/_another.scss';
+
+/* This is just a comment. */
+
+@import 'file/no_exist.scss';
