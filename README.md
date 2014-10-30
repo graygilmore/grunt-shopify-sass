@@ -1,6 +1,6 @@
 # grunt-shopify-sass
 
-> Concatenate your Sass files defined by the @@import order.
+> Concatenate your Sass files defined by the @import order.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -24,30 +24,24 @@ In your project's Gruntfile, add a section named `shopify_sass` to the data obje
 
 ```js
 grunt.initConfig({
-  shopify_sass: {
-    options: {
-      // Task-specific options go here.
+    shopify_sass: {
+        options: {
+            // Task-specific options go here.
+        },
+        your_target: {
+            // Target-specific file lists and/or options go here.
+        },
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.base
+Type: `String`  
+Default value: `''`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+A string value that is used to determine where to find the imported files. If no `base` is provided it defaults to be relative to the `src` file.
 
 ### Usage Examples
 
@@ -56,12 +50,12 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  shopify_sass: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    shopify_sass: {
+        options: {},
+        files: {
+            'assets/theme.scss.liquid': "styles/theme.scss"
+        },
     },
-  },
 });
 ```
 
@@ -70,15 +64,14 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  shopify_sass: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
+    shopify_sass: {
+        options: {
+            base: "styles"
+        },
+        files: {
+            'assets/theme.scss.liquid': ['theme.scss', 'additional.scss'],
+        },
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
 });
 ```
 

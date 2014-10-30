@@ -10,20 +10,38 @@
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    var path = require("path");
 
-    grunt.registerMultiTask('shopify_sass', 'Concatenate your Sass files defined by the @@import order.', function() {
-        // Merge task-specific and/or target-specific options with these defaults.
+    grunt.registerMultiTask('shopify_sass', 'Concatenate your Sass files defined by the @import order.', function() {
+
         var options = this.options({
-            punctuation: '.',
-            separator: ', '
+            base: ''
         });
 
-        // Iterate over all specified file groups.
-        this.files.forEach(function(f) {
-            // Concat specified files.
-            var src = f.src.filter(function(filepath) {
+        var rex = /@import\s*("[^"]+"|'[^']+')\s*;/g;
+        var match;
+
+        // Iterate over each specified src file
+        this.files.forEach( function(files) {
+
+            var sources = [];
+
+            var file = files.src.filter(function(filepath) {
+
+                var fileContents = grunt.file.read(filepath);
+
+                if( !options.base ) {
+                    // If no base is provided, make it relative to the src file
+                    options.base = path.dirname(filepath);
+                }
+
+                while (match = rex.exec(fileContents)) {
+                    // Extract just the source of the file
+                    sources.push(path.join(options.base, (match[1])) );
+                }
+            });
+
+            var newContents = sources.filter( function(filepath) {
                 // Warn on and remove invalid source files (if nonull was set).
                 if (!grunt.file.exists(filepath)) {
                     grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -31,20 +49,18 @@ module.exports = function(grunt) {
                 } else {
                     return true;
                 }
-            }).map(function(filepath) {
+            }).map( function(filepath) {
                 // Read file source.
                 return grunt.file.read(filepath);
-            }).join(grunt.util.normalizelf(options.separator));
+            }).join("\n");
 
-            // Handle options.
-            src += options.punctuation;
-
-            // Write the destination file.
-            grunt.file.write(f.dest, src);
+            grunt.file.write(files.dest, newContents);
 
             // Print a success message.
-            grunt.log.writeln('File "' + f.dest + '" created.');
+            grunt.log.writeln('File "' + files.dest + '" created.');
+
         });
+
     });
 
 };

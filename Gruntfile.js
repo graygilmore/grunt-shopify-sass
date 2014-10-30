@@ -31,9 +31,15 @@ module.exports = function(grunt) {
         // Configuration to be run (and then tested).
         shopify_sass: {
             default: {
-                files: {
-                    "tmp/test.scss.liquid": "test/fixtures/test.scss"
-                }
+                src: "test/fixtures/test.scss",
+                dest: "tmp/default.scss.liquid"
+            },
+            multiple_src: {
+                src: [
+                    "test/fixtures/test.scss",
+                    "test/fixtures/test-2.scss"
+                ],
+                dest: "tmp/multiple.scss.liquid"
             }
         },
 
