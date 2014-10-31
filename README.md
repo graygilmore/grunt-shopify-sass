@@ -33,28 +33,17 @@ In your project's Gruntfile, add a section named `shopify_sass` to the data obje
 ```js
 grunt.initConfig({
     shopify_sass: {
-        options: {
-            // Task-specific options go here.
-        },
         your_target: {
-            // Target-specific file lists and/or options go here.
+            // Target-specific file lists
         },
     },
 });
 ```
 
-### Options
-
-#### options.base
-Type: `String`  
-Default value: `''`
-
-A string value that is used to determine where to find the imported files. If no `base` is provided it defaults to be relative to the `src` file.
-
 ### Usage Examples
 
-#### Default Options
-In this example, we aren't passing any options to the plugin. All of the imports in `styles/theme.scss` will be concatenated into `assets/theme.scss.liquid`.
+#### Simple
+In this example, all of the imports in `styles/theme.scss` will be concatenated into `assets/theme.scss.liquid`.
 
 ```scss
 /* Example "styles.theme.scss" */
@@ -70,7 +59,6 @@ In this example, we aren't passing any options to the plugin. All of the imports
 ```js
 grunt.initConfig({
     shopify_sass: {
-        options: {},
         files: {
             'assets/theme.scss.liquid': "styles/theme.scss"
         },
@@ -78,20 +66,14 @@ grunt.initConfig({
 });
 ```
 
-#### Custom Options
-In this example, the `base` option is used to specify where the imported files should be coming from. We're also providing two different source files.
+#### Multiple sources
+In this example we're using two different source files written in CoffeeScript.
 
-```js
-grunt.initConfig({
-    shopify_sass: {
-        options: {
-            base: "imports"
-        },
-        files: {
-            'assets/theme.scss.liquid': ['styles/theme.scss', 'styles/additional.scss'],
-        },
-    },
-});
+```coffee
+grunt.initConfig
+    shopify_sass:
+        files:
+            'assets/theme.scss.liquid': ['styles/theme.scss', 'styles/additional.scss']
 ```
 
 ## Contributing

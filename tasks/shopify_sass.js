@@ -14,10 +14,6 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('shopify_sass', 'Concatenate your Sass files defined by the @import order.', function() {
 
-        var options = this.options({
-            base: ''
-        });
-
         var rex = /@import\s*(("([^"]+)")|('([^']+)'))\s*;/g;
         var match;
 
@@ -30,16 +26,11 @@ module.exports = function(grunt) {
 
                 var fileContents = grunt.file.read(filepath);
 
-                if( !options.base ) {
-                    // If no base is provided, make it relative to the src file
-                    options.base = path.dirname(filepath);
-                }
-
                 while (match = rex.exec(fileContents)) {
                     // Extract just the source of the file
                     // [3] double quotes, @import "_import-file.scss";
                     // [5] single quotes, @import '_import-file.scss';
-                    sources.push(path.join(options.base, (match[3] || match[5])) );
+                    sources.push(path.join(path.dirname(filepath), (match[3] || match[5])) );
                 }
             });
 
