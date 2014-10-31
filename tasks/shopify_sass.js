@@ -20,34 +20,31 @@ module.exports = function(grunt) {
         // Iterate over each specified src file
         this.files.forEach( function(files) {
 
-            var sources = [];
+            var fileContents = [];
 
-            var file = files.src.filter(function(filepath) {
+            var file = files.src.filter(function(filepath, i) {
 
-                var fileContents = grunt.file.read(filepath);
+                fileContents[i] = grunt.file.read(filepath);
 
-                while (match = rex.exec(fileContents)) {
-                    // Extract just the source of the file
+                while (match = rex.exec(fileContents[i])) {
+
                     // [3] double quotes, @import "_import-file.scss";
                     // [5] single quotes, @import '_import-file.scss';
-                    sources.push(path.join(path.dirname(filepath), (match[3] || match[5])) );
+                    var importFile = path.join(path.dirname(filepath), (match[3] || match[5]));
+
+                    // Skip the file if it doesn't exist
+                    if (!grunt.file.exists(importFile)) {
+                        grunt.log.warn('File to import: "' + importFile + '" not found.');
+                        continue;
+                    }
+
+                    // Replace the @import text with the actual contents of the file
+                    fileContents[i] = fileContents[i].replace(match[0], grunt.file.read(importFile));
                 }
             });
 
-            var newContents = sources.filter( function(filepath) {
-                // Warn on and remove invalid source files (if nonull was set).
-                if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn('Source file "' + filepath + '" not found.');
-                    return false;
-                } else {
-                    return true;
-                }
-            }).map( function(filepath) {
-                // Read file source.
-                return grunt.file.read(filepath);
-            }).join("\n");
-
-            grunt.file.write(files.dest, newContents);
+            // Write our new file
+            grunt.file.write(files.dest, fileContents.join("\n"));
 
             // Print a success message.
             grunt.log.writeln('File "' + files.dest + '" created.');

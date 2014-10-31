@@ -1,7 +1,23 @@
+/* Files with both double quotes and single quotes and a nested path */
+
 body {
   color: blue;
 }
 
 body {
   color: black;
+}
+
+
+/* This file does not exist */
+
+@import '_grey.scss';
+
+/*
+  You can have anything you want on this page.
+  How about we add some more styles!
+*/
+
+body {
+  color: white;
 }
