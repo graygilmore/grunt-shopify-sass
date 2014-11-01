@@ -17,12 +17,13 @@ module.exports = function(grunt) {
         var rex = /@import\s*(("([^"]+)")|('([^']+)'))\s*;/g;
         var match;
 
-        // Iterate over each specified src file
+        // Iterate over each src/dest pairing
         this.files.forEach( function(files) {
 
             var fileContents = [];
 
-            var file = files.src.filter(function(filepath, i) {
+            // Iterate over each src file
+            files.src.forEach( function(filepath, i) {
 
                 fileContents[i] = grunt.file.read(filepath);
 
