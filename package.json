@@ -1,7 +1,7 @@
 {
   "name": "grunt-shopify-sass",
   "description": "Concatenate your Sass files as determined by the @import order.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/graygilmore/grunt-shopify-sass",
   "author": {
     "name": "Gray Gilmore",

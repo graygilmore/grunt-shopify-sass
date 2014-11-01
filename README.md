@@ -81,4 +81,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-* 2014-10-30   v0.2.0   First working version.
+ * 2014-07-19   v0.2.1   Remove base option, keep styles in src files
+ * 2014-10-30   v0.2.0   First working version.
