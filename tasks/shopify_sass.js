@@ -26,8 +26,10 @@ module.exports = function(grunt) {
             files.src.forEach( function(filepath, i) {
 
                 fileContents[i] = grunt.file.read(filepath);
+                var imports = {};
 
-                while (match = rex.exec(fileContents[i])) {
+                /* Find all of our @imports */
+                while( match = rex.exec(fileContents[i]) ) {
 
                     // [3] double quotes, @import "_import-file.scss";
                     // [5] single quotes, @import '_import-file.scss';
@@ -39,8 +41,12 @@ module.exports = function(grunt) {
                         continue;
                     }
 
+                    imports[match[0]] = importFile;
+                }
+
+                for( var imp in imports ) {
                     // Replace the @import text with the actual contents of the file
-                    fileContents[i] = fileContents[i].replace(match[0], grunt.file.read(importFile));
+                    fileContents[i] = fileContents[i].replace(imp, grunt.file.read(imports[imp]));
                 }
             });
 
