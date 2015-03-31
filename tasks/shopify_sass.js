@@ -15,12 +15,22 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('shopify_sass', 'Concatenate your Sass files defined by the @import order.', function() {
 
         var rex = /@import\s*(("([^"]+)")|('([^']+)'))\s*;/g;
-        var match;
+        var match, fileIterator;
 
         // Iterate over each src/dest pairing
-        this.files.forEach( function(files) {
+        if (this.files.length !== 0) {
+            fileIterator = this.files;
+        } else if (this.target === "files") {
+            var dataKey = Object.keys(this.data)[0];
+            fileIterator = [{ src: this.data[dataKey], dest: dataKey }];
+        }
+
+        fileIterator.forEach( function(files) {
 
             var fileContents = [];
+
+            if (typeof files.src === "string")
+                files.src = [files.src];
 
             // Iterate over each src file
             files.src.forEach( function(filepath, i) {
