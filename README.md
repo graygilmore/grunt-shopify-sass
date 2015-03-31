@@ -80,6 +80,6 @@ grunt.initConfig
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-
- * 2014-11-01   v0.2.1   Remove base option, keep styles in src files
- * 2014-10-30   v0.2.0   First working version
+* 2014-11-01   v0.2.2   No longer need to specify targets
+* 2014-11-01   v0.2.1   Remove base option, keep styles in src files
+* 2014-10-30   v0.2.0   First working version
